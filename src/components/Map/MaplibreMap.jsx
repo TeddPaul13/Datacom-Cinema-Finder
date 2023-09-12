@@ -29,10 +29,13 @@ const MapSnappingEventListener = () => {
 
     try {
       // [Docs](https://maplibre.org/maplibre-gl-js-docs/api/map/#map#flyto)
+      if (lat >= -90 && lat <= 90) {
       map.flyTo({
         center: [lat, lng],
         zoom: 14,
-      })
+      })}else{
+        console.error('Invalid latitude value:', lat)
+      }
     } catch (e) {
       console.error(e);
       enqueueSnackbar('Unexpected error while attempting map navigation', { variant: 'error' });
@@ -47,10 +50,15 @@ const MaplibreMap = ({ children }) => {
     <Map
       mapLib={maplibregl}
       mapStyle="https://api.maptiler.com/maps/streets-v2/style.json?key=46DCXvzkGNIvqAgCljGV"
-      initialViewState={{
-        bounds: convertBounds(totalBounds),
-      }}
+      // mapStyle="https://api.maptiler.com/maps/outdoor-v2/style.json?key=TmZb9hnw6N1qJbPKqbGM"  
+      // initialViewState={{
+      //   bounds: convertBounds(totalBounds),
+      // }}
+      fitBounds={totalBounds}
       padding={24}
+      maxZoom={15}
+      // limit boundaries to prevent the user from scrolling outside the specified region
+      maxBounds={totalBounds}
     >
       <MapSnappingEventListener />
       <MapContextProvider value={{ Marker: MaplibreMarker }}>
