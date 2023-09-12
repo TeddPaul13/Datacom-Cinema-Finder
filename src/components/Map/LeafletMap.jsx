@@ -10,6 +10,7 @@ import { Icon } from "leaflet";
 import useEventListener from "@use-it/event-listener";
 import { useSnackbar } from "notistack";
 import { totalBounds } from "../../data/bounds";
+import { allCountryBounds } from "../../data/bounds";
 import MapContext from "./context";
 // Have to override these url's so that it finds the bundles the correct images
 Icon.Default.imagePath =
@@ -37,10 +38,10 @@ const MapSnappingEventListener = () => {
 };
 
 const convertBounds = ([w, s, e, n]) => [
-  // Leaflet expects boundings boxes to be an array consisting of the corners of the box.
-  // These corners are [lat, lon] [LatLng docs](https://leafletjs.com/reference.html#latlng)
-  [s, w],
-  [n, e]
+//   // Leaflet expects boundings boxes to be an array consisting of the corners of the box.
+//   // These corners are [lat, lon] [LatLng docs](https://leafletjs.com/reference.html#latlng)
+[s, w],
+ [n, e]
 ];
 
 const LeafletMarker = ({ lat, lon }) => <Marker position={[lat, lon]} />;
@@ -54,6 +55,7 @@ const LeafletMap = ({ children }) => {
         style={{ height: "100%", backgroundColor: "#99b3cc" }}
         zoomSnap={0.5}
         zoomDelta={0.5}
+        
       >
         <MapSnappingEventListener />
         <TileLayer

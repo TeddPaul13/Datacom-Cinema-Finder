@@ -10,6 +10,8 @@ const MapTypeMenu = () => {
 
   const [mapType, setMapType] = useMapType();
 
+
+
   return (<>
     <IconButton ref={settingsButtonRef} sx={{ ml: 'auto' }} color={open ? 'grey' : 'initial'} onClick={() => setOpen(true)}>
       <MdSettings />
@@ -31,6 +33,8 @@ const MapTypeMenu = () => {
         <FormLabel>Active map library</FormLabel>
         <RadioGroup value={mapType} onChange={(evt) => {
           setMapType(evt.target.value);
+          //close popover after setting maptype by setting open to false
+          setOpen(false)
         }}>
           {mapTypes.map((type) => (
             <FormControlLabel key={type} value={type} control={<Radio />} label={startCase(type)} />
